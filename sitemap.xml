@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>https://estebanetudiant.github.io/portfolio/</loc>
+<changefreq>monthly</changefreq>
+<priority>1</priority>
+</url>
+<url>
+<loc>https://estebanetudiant.github.io/portfolio/projets/facturation-apf/</loc>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://estebanetudiant.github.io/portfolio/projets/plateforme-licences/</loc>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://estebanetudiant.github.io/portfolio/projets/jeu-de-plateau-java/</loc>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+</urlset>
