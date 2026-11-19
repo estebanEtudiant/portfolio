@@ -152,6 +152,7 @@ export const projects: Project[] = [
     role: "Conception et développement en autonomie : modèle de données, API, interface, génération des documents et conteneurisation.",
     outcome: "Utilisée aujourd'hui par APF France Handicap à la place du suivi sur Excel.",
     repo: "https://github.com/estebanEtudiant/Facturation",
+    portfolio: "https://estebanetudiant.github.io/Portfolio_Esteban/",
     // Données de test uniquement. Captures « Sécurité » et « E-mail » écartées : adresse personnelle visible.
     screenshots: [
       { src: "/projets/facturation-apf/liste-factures.webp", alt: "Tableau des factures avec filtres, statuts et boutons d'action", caption: "La liste des factures : filtres par mois, modèle et tag, statut d'envoi, et actions (aperçu, renvoi, suppression, email). Données de test." },

@@ -62,6 +62,8 @@ export type Project = {
   outcome?: string;
   repo?: string;
   demo?: string;
+  /** Portfolio détaillé du projet (ex. portfolio de stage) */
+  portfolio?: string;
   /** Chemins sous /public/projets/<slug>/ : galerie masquée tant que la liste est vide */
   screenshots: { src: string; alt: string; caption?: string }[];
   diagram: Diagram;

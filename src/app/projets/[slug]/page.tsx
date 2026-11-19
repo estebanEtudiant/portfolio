@@ -79,14 +79,19 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
               <dd className="mt-1">{p.outcome}</dd>
             </div>
           )}
-          {(p.repo || p.demo) && (
+          {(p.repo || p.demo || p.portfolio) && (
             <div>
               <dt className="text-sm text-graphite">Liens</dt>
               <dd className="mt-1 space-y-1">
                 {p.repo && (
-                  <a href={p.repo} target="_blank" rel="noopener noreferrer" className="lien inline-flex items-center gap-2">
+                  <a href={p.repo} target="_blank" rel="noopener noreferrer" className="lien flex w-fit items-center gap-2">
                     <GitHubIcon size={15} />
                     Code sur GitHub
+                  </a>
+                )}
+                {p.portfolio && (
+                  <a href={p.portfolio} target="_blank" rel="noopener noreferrer" className="lien block w-fit">
+                    Portfolio de stage détaillé
                   </a>
                 )}
                 {p.demo && (
