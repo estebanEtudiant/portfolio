@@ -63,6 +63,21 @@ Le préfixe d'URL (`/portfolio`) et l'adresse canonique sont fournis automatique
 
 Pour un nom de dépôt différent en local : `NEXT_PUBLIC_BASE_PATH=/mon-depot npm run build`.
 
+### Publication actuelle : branche `gh-pages` (sans GitHub Actions)
+
+Le site est en ligne sur https://estebanetudiant.github.io/portfolio/ depuis le 19/11/2026. GitHub Actions étant bloqué sur le compte (problème de facturation), le workflow échoue à chaque push : le site est construit en local puis publié sur la branche `gh-pages` (Settings → Pages → Source : « Deploy from a branch », `gh-pages`, `/`).
+
+Pour republier après une modification (depuis Git Bash) :
+
+```bash
+MSYS_NO_PATHCONV=1 NEXT_PUBLIC_BASE_PATH=/portfolio NEXT_PUBLIC_SITE_URL=https://estebanetudiant.github.io/portfolio npm run build
+touch out/.nojekyll
+cd out && git init -b gh-pages && git add -A && git commit -m "Publication"   && git push -f https://github.com/estebanEtudiant/portfolio.git gh-pages && cd ..
+npm run build   # reconstruire sans préfixe pour tester en local
+```
+
+Une fois la facturation GitHub réglée, repasser la source de Pages sur « GitHub Actions » : le workflow publiera alors tout seul à chaque push.
+
 ## Choix techniques
 
 - **Next.js 16 en export statique**, TypeScript, Tailwind CSS 4.
