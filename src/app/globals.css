@@ -1,0 +1,384 @@
+@import "tailwindcss";
+
+/*
+  Direction : « calque et encre de plan ».
+  Fond calque froid, encre bleu nuit, un seul accent cobalt.
+  Le jaune surligneur n'existe que dans les schémas (les données qui circulent).
+*/
+:root {
+  --calque: #edf0f3;
+  --surface: #f7f8fa;
+  --encre: #16203a;
+  --graphite: #485266;
+  --trait: #c6cdd8;
+  --cobalt: #2741d8;
+  --surligneur: #f2c200;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --calque: #0f1830;
+    --surface: #16213f;
+    --encre: #e7ebf3;
+    --graphite: #a5b0c6;
+    --trait: #2c3a5c;
+    --cobalt: #93a5ff;
+    --surligneur: #f5cb2a;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --calque: #0f1830;
+  --surface: #16213f;
+  --encre: #e7ebf3;
+  --graphite: #a5b0c6;
+  --trait: #2c3a5c;
+  --cobalt: #93a5ff;
+  --surligneur: #f5cb2a;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-calque: var(--calque);
+  --color-surface: var(--surface);
+  --color-encre: var(--encre);
+  --color-graphite: var(--graphite);
+  --color-trait: var(--trait);
+  --color-cobalt: var(--cobalt);
+  --color-surligneur: var(--surligneur);
+  --font-sans: var(--font-plex), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-plex-condensed), var(--font-plex), sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+html {
+  background: var(--calque);
+  color: var(--encre);
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 7.5rem; /* en-tête mobile sur deux lignes */
+}
+
+@media (min-width: 48rem) {
+  html {
+    scroll-padding-top: 5.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--calque);
+  color: var(--encre);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  font-feature-settings: "kern", "liga";
+}
+
+/* Surfaces du navigateur aux couleurs du calque */
+html {
+  scrollbar-color: color-mix(in srgb, var(--graphite) 45%, transparent) var(--calque);
+  caret-color: var(--cobalt);
+}
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+::selection {
+  background: var(--surligneur);
+  color: #16203a;
+}
+
+:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Courbes communes : sortie franche pour ce qui arrive, aller-retour pour ce qui se trace */
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@keyframes trace {
+  from {
+    transform: translateY(105%);
+  }
+}
+
+/* Suite de l'ouverture : ce qui suit le nom arrive juste après lui */
+@keyframes apparait {
+  from {
+    opacity: 0;
+    transform: translateY(0.6rem);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .trace {
+    animation: trace 0.9s var(--ease-out) both;
+  }
+  .apparait {
+    animation: apparait 0.7s var(--ease-out) both;
+  }
+}
+
+/* Trait cobalt sous chaque titre de section, tracé comme au réglet */
+.titre::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 3px;
+  margin-top: 0.3em;
+  background: var(--cobalt);
+  transform-origin: left;
+}
+
+/* Boutons : l'encre remplit le contour de gauche à droite ; léger enfoncement à l'appui */
+.balaye {
+  background: linear-gradient(var(--encre), var(--encre)) no-repeat left / 0% 100%;
+  transition: background-size 0.3s var(--ease-out), color 0.3s, transform 0.16s var(--ease-out);
+}
+.bouton {
+  transition: transform 0.16s var(--ease-out);
+}
+@media (hover: hover) {
+  .balaye:hover {
+    background-size: 100% 100%;
+    color: var(--calque);
+  }
+  .bouton:hover {
+    transform: translateY(-2px);
+  }
+}
+.balaye:active,
+.bouton:active {
+  transform: scale(0.97);
+}
+
+/* ——— Schémas d'architecture ——— */
+.schema svg .noeud,
+.schema svg .arete {
+  transition: opacity 0.2s var(--ease-out);
+}
+.schema svg .noeud rect {
+  fill: var(--surface);
+  stroke: var(--encre);
+  stroke-width: 1.25;
+  transition: stroke 0.2s, stroke-width 0.2s;
+}
+.schema svg .noeud:hover rect {
+  stroke: var(--cobalt);
+  stroke-width: 2;
+}
+.schema svg .arete path {
+  stroke: var(--graphite);
+  stroke-width: 1.25;
+  transition: stroke 0.2s, stroke-width 0.2s;
+}
+.schema svg .point {
+  fill: var(--surligneur);
+  stroke: var(--encre);
+  stroke-width: 1;
+}
+
+@keyframes dessine {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+@keyframes pose {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@keyframes fondu {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Avant l'entrée à l'écran (JavaScript actif) : schéma en attente */
+  .js .schema:not(.vu) :is(.entree, .groupe, .etiquette, .maillon),
+  .js .schema:not(.vu) .arete path {
+    opacity: 0;
+  }
+  .schema.vu .entree {
+    animation: pose 0.45s var(--ease-out) both;
+  }
+  .schema.vu .groupe,
+  .schema.vu .etiquette {
+    animation: fondu 0.5s var(--ease-out) both;
+  }
+  .schema.vu .arete path {
+    animation: dessine 0.7s var(--ease-in-out) both;
+  }
+  .schema.vu .maillon {
+    animation: apparait 0.6s var(--ease-out) both;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .schema .point {
+    display: none;
+  }
+}
+
+/* ——— Animations liées au défilement ——— */
+@keyframes revele {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+}
+@keyframes regle {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes descend {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes pointe {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .revele {
+      animation: revele linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+    .titre::after {
+      animation: regle linear both;
+      animation-timeline: view();
+      animation-range: entry 40% cover 35%;
+    }
+    .trait-temps {
+      transform-origin: top;
+      animation: descend linear both;
+      animation-timeline: view();
+      animation-range: entry 60% cover 50%;
+    }
+    .point-temps {
+      animation: pointe linear both;
+      animation-timeline: view();
+      animation-range: entry 70% entry 100%;
+    }
+  }
+}
+
+/* Repli sans animation-timeline (Firefox) : <Revelateur /> pose `cache` puis `vu` */
+.revele.cache {
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+.revele.cache:not(.vu) {
+  opacity: 0;
+  transform: translateY(1.5rem);
+}
+.titre.cache::after {
+  transition: transform 0.6s var(--ease-out) 0.15s;
+}
+.titre.cache:not(.vu)::after {
+  transform: scaleX(0);
+}
+
+/* En-tête : filet et flou apparaissent dès qu'on quitte le haut de page */
+@keyframes en-tete {
+  to {
+    border-color: var(--trait);
+    background-color: color-mix(in srgb, var(--calque) 88%, transparent);
+    backdrop-filter: blur(12px);
+  }
+}
+@supports (animation-timeline: scroll()) {
+  .en-tete {
+    animation: en-tete linear both;
+    animation-timeline: scroll();
+    animation-range: 0 24px;
+  }
+}
+
+/* ——— Transitions entre pages (<ViewTransition> de React) ——— */
+@keyframes page-sort {
+  to {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+}
+@keyframes page-entre {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+}
+::view-transition-old(.page) {
+  animation: page-sort 0.18s cubic-bezier(0.4, 0, 1, 1) both;
+}
+::view-transition-new(.page) {
+  animation: page-entre 0.42s var(--ease-out) 0.08s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* Halo de grille qui suit le pointeur dans l'accueil */
+.halo {
+  mask-image: radial-gradient(circle 18rem at var(--x, 75%) var(--y, 35%), #000 0%, transparent 100%);
+  opacity: 0.8;
+}
+
+/* Grille de calque très légère, uniquement derrière les schémas */
+.grille {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--trait) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--trait) 55%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: -1px -1px;
+}
+
+/* Lien éditorial : soulignement fin qui s'épaissit au survol */
+.lien {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  transition: text-decoration-color 0.2s, text-decoration-thickness 0.2s;
+}
+.lien:hover {
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 2px;
+}
+
+/* Barre de lecture des études de cas */
+@keyframes progression {
+  to {
+    transform: scaleX(1);
+  }
+}
+@supports (animation-timeline: scroll()) {
+  .progression {
+    animation: progression linear both;
+    animation-timeline: scroll(root);
+  }
+}
