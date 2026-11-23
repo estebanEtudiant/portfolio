@@ -77,6 +77,30 @@ const boardDiagram: Diagram = {
   mobileOrder: ["human", "ai", "ctrl", "model", "text", "gui"],
 };
 
+const agentDiagram: Diagram = {
+  title: "Architecture d'AgentEntreprise",
+  width: 640,
+  height: 380,
+  nodes: [
+    { id: "web", label: "Next.js", detail: "web + PWA chantier", x: 10, y: 40, w: 170 },
+    { id: "src", label: "Mails, photos, PDF", detail: "pièces entrantes", x: 10, y: 260, w: 170 },
+    { id: "api", label: "API FastAPI", detail: "Pydantic, SQLAlchemy", x: 236, y: 40, w: 170 },
+    { id: "worker", label: "Worker", detail: "Procrastinate", x: 236, y: 260, w: 170 },
+    { id: "db", label: "PostgreSQL 16", detail: "isolation RLS", x: 466, y: 40, w: 164 },
+    { id: "llm", label: "API Claude", detail: "agents, sorties typées", x: 466, y: 160, w: 164 },
+    { id: "ext", label: "Intégrations", detail: "après validation", x: 466, y: 280, w: 164 },
+  ],
+  edges: [
+    { from: "web", fromSide: "r", to: "api", toSide: "l", flow: true },
+    { from: "src", fromSide: "r", to: "worker", toSide: "l", label: "lecture", flow: true },
+    { from: "api", fromSide: "r", to: "db", toSide: "l", label: "SQL", flow: true },
+    { from: "worker", fromSide: "t", to: "api", toSide: "b", label: "file de tâches" },
+    { from: "worker", fromSide: "r", fromAt: 0.3, to: "llm", toSide: "l", flow: true },
+    { from: "worker", fromSide: "r", fromAt: 0.7, to: "ext", toSide: "l" },
+  ],
+  mobileOrder: ["web", "api", "db", "src", "worker", "llm", "ext"],
+};
+
 export const projects: Project[] = [
   {
     slug: "facturation-apf",
@@ -161,6 +185,62 @@ export const projects: Project[] = [
       { src: "/projets/facturation-apf/parametres.webp", alt: "Formulaire des paramètres de facturation et des jours d'ouverture", caption: "Les paramètres de facturation : prix du repas, forfait jour, modèles par défaut et jours d'ouverture de chaque mois." },
     ],
     diagram: facturationDiagram,
+  },
+  {
+    slug: "agent-entreprise",
+    name: "AgentEntreprise",
+    kind: "Projet personnel",
+    period: "2026",
+    summary:
+      "Des agents IA pour le back-office des PME de travaux publics : ils lisent factures, bons de livraison et tickets de pesée, les rapprochent des commandes et calculent la marge de chaque chantier, au jour le jour.",
+    stack: ["Python", "FastAPI", "Pydantic", "SQLAlchemy", "PostgreSQL", "pgvector", "Next.js", "TypeScript", "Tailwind CSS", "API Claude", "pytest", "Playwright", "Docker"],
+    context: [
+      "Dans une PME de travaux publics de 10 à 100 salariés, les factures, bons de livraison et tickets de pesée arrivent par mail, en photo ou sur papier. Savoir si un chantier gagne ou perd de l'argent demande de tout ressaisir et de tout rapprocher à la main.",
+      "AgentEntreprise se branche sur les outils déjà utilisés (boîte mail, logiciel comptable, banque, Chorus Pro). Ce n'est pas un ERP : rien à ressaisir, et rien ne part sans l'accord du dirigeant.",
+    ],
+    problem:
+      "Faire lire des documents à une IA sans lui laisser le dernier mot : chaque montant extrait doit être vérifié par le code, chaque client isolé des autres, et aucune action externe ne doit partir sans validation humaine.",
+    features: [
+      "Lecture des pièces : factures électroniques (Factur-X, CII, UBL) lues sans IA ; pour le reste, extraction par le modèle puis contrôle des totaux, de la TVA et des doublons par le code.",
+      "Rapprochement 3 voies commande, livraison ou pesée, facture, avec tolérances réglables et brouillon de réclamation.",
+      "Marge de chaque chantier, ventilée par poste et comparée au budget ; carte des chantiers sur fonds IGN et planning en Gantt.",
+      "Devis, situations en Factur-X déposées sur Chorus Pro après validation, suivi des encaissements et rapprochement bancaire.",
+      "Recherche en français avec Ctrl+K : le modèle produit une requête typée, que le code traduit en SQL paramétré.",
+      "Application mobile hors ligne pour le chef de chantier : rapport dicté, planning, pièces, sans aucun montant affiché.",
+    ],
+    decisions: [
+      {
+        title: "Isolation des clients dans la base",
+        body: "Chaque table métier porte un tenant_id protégé par la Row-Level Security de PostgreSQL, et chaque table a son test d'isolation.",
+      },
+      {
+        title: "Rien ne sort sans validation",
+        body: "Mails, relances, dépôts Pennylane ou Chorus Pro et envois de devis passent par un écran Validations. Seules les actions internes, réversibles et journalisées sont automatiques.",
+      },
+      {
+        title: "Les documents sont des données non fiables",
+        body: "L'agent qui lit un mail ou un PDF n'est jamais celui qui déclenche une action externe : c'est la protection contre l'injection de prompt.",
+      },
+      {
+        title: "Des règles métier pures et testées",
+        body: "Le calcul de la marge, du rapprochement et des pénalités vit dans un paquet sans aucune entrée-sortie, testé avec pytest. L'argent est en Decimal, avec des arrondis explicites.",
+      },
+      {
+        title: "Chaque action d'agent journalisée",
+        body: "Modèle, version du prompt et coût sont enregistrés pour chaque action, avec un quota mensuel de lecture par entreprise.",
+      },
+    ],
+    challenges: [],
+    role: "Projet personnel : conception, API, interface web et mobile, agents et tests.",
+    screenshots: [
+      { src: "/projets/agent-entreprise/aujourdhui.webp", alt: "Écran du matin : synthèse rédigée par l'IA, marge globale et points bloquants", caption: "L'écran du matin : une synthèse rédigée à partir des chiffres calculés, puis ce qui bloque. Entreprise de démonstration, données fictives." },
+      { src: "/projets/agent-entreprise/fiche-chantier.webp", alt: "Fiche d'un chantier dont les dépenses dépassent le budget", caption: "La fiche d'un chantier qui dérape : dépenses par poste comparées au budget." },
+      { src: "/projets/agent-entreprise/carte.webp", alt: "Carte des chantiers avec l'état de leur marge", caption: "La carte des chantiers sur fonds IGN, avec l'état de la marge de chacun." },
+      { src: "/projets/agent-entreprise/planning.webp", alt: "Planning des chantiers en diagramme de Gantt", caption: "Le planning en Gantt, avec dépendances entre phases." },
+      { src: "/projets/agent-entreprise/recherche.webp", alt: "Palette de recherche Ctrl+K avec une question en français", caption: "Ctrl+K : une question en français devient une requête typée, traduite en SQL paramétré par le code." },
+      { src: "/projets/agent-entreprise/mobile-rapport.webp", alt: "Rapport du jour saisi sur téléphone par le chef de chantier", caption: "Sur le chantier : le rapport du jour, dicté sur téléphone, même hors ligne." },
+    ],
+    diagram: agentDiagram,
   },
   {
     slug: "plateforme-licences",

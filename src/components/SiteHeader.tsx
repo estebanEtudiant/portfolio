@@ -1,13 +1,7 @@
 import Link from "next/link";
 import { profile } from "@/content/site";
+import { NavLinks } from "./NavLinks";
 import { ThemeToggle } from "./ThemeToggle";
-
-const links = [
-  { href: "/#projets", label: "Projets" },
-  { href: "/#parcours", label: "Parcours" },
-  { href: "/#cv", label: "CV" },
-  { href: "/#contact", label: "Contact" },
-];
 
 export function SiteHeader() {
   return (
@@ -25,28 +19,12 @@ export function SiteHeader() {
           {profile.firstName} {profile.lastName}
         </Link>
         <div className="flex items-center gap-1">
-          <ul className="hidden items-center gap-1 md:flex">
-            {links.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href} className="rounded-full px-3 py-2 text-[0.95rem] text-graphite transition-colors hover:text-encre">
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <NavLinks variant="desktop" />
           <ThemeToggle />
         </div>
       </nav>
       {/* Mobile : les mêmes liens sur une ligne, sous le nom */}
-      <ul aria-label="Sections" className="-mt-2 flex gap-1 overflow-x-auto px-2 pb-2 md:hidden">
-        {links.map((l) => (
-          <li key={l.href}>
-            <Link href={l.href} className="block rounded-full px-3 py-1.5 text-[0.95rem] text-graphite hover:text-encre">
-              {l.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <NavLinks variant="mobile" />
     </header>
   );
 }

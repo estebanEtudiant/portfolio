@@ -152,7 +152,7 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
             <div className="grid gap-12">
               {p.screenshots.map((sc) => (
                 <figure key={sc.src} className="revele m-0">
-                  <Image src={asset(sc.src)} alt={sc.alt} width={1600} height={730} sizes="(min-width: 1024px) 760px, 100vw" loading="lazy" className="h-auto w-full rounded-md border border-trait shadow-[0_24px_60px_-34px_rgba(22,32,58,0.5)]" />
+                  <Image src={asset(sc.src)} alt={sc.alt} width={1600} height={730} sizes="(min-width: 1024px) 760px, 100vw" loading="lazy" className="h-auto max-h-[80vh] w-auto max-w-full rounded-md border border-trait shadow-[0_24px_60px_-34px_rgba(22,32,58,0.5)]" />
                   {sc.caption && <figcaption className="mt-3 max-w-[40rem] text-sm text-graphite">{sc.caption}</figcaption>}
                 </figure>
               ))}

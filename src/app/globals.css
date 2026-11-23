@@ -315,6 +315,39 @@ h3 {
   }
 }
 
+/* Liens de navigation : trait cobalt tracé depuis le centre au survol et sur la section lue */
+.nav-lien {
+  position: relative;
+  transition: color 0.25s;
+}
+.nav-lien::after {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.2rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--cobalt);
+  transform: scaleX(0);
+  transition: transform 0.35s var(--ease-out);
+}
+.nav-lien:hover,
+.nav-lien:focus-visible,
+.nav-lien[aria-current] {
+  color: var(--encre);
+}
+.nav-lien:hover::after,
+.nav-lien:focus-visible::after,
+.nav-lien[aria-current]::after {
+  transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-lien::after {
+    transition: none;
+  }
+}
+
 /* ——— Transitions entre pages (<ViewTransition> de React) ——— */
 @keyframes page-sort {
   to {
