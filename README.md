@@ -39,6 +39,7 @@ Tout le texte est dans `src/content/`, pas besoin de toucher aux composants.
 - **Difficultés et solutions** : `challenges` (et `learnings`, « Ce que j'en retiens ») de chaque projet. Remplis pour Facturation APF ; masqués tant qu'ils sont vides pour les deux autres.
 - **Jeu de plateau Java** : la page est courte (pas de dépôt public). Ajouter le nom du jeu, le rôle exact dans l'équipe et un lien si le code peut être publié.
 - **Mettre à jour le CV** (dernier export : 19/11/2026) : réexporter le design Canva en PDF A4 vers `public/cv/Esteban-Barthod-Malat-CV-stage-2027.pdf`, et l'aperçu en `public/cv/apercu-cv.webp` (1 000 px de large).
+- **CV Suisse** (design Canva « CV Suisse — Esteban Barthod-Malat — stage 2027 ») : même procédure vers `public/cv/Esteban-Barthod-Malat-CV-Suisse-2027.pdf` et `public/cv/apercu-cv-suisse.webp`. Le choix France / Suisse se fait dans `src/components/CvChoice.tsx`.
 
 ### Schémas d'architecture
 

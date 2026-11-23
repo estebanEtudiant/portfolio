@@ -14,6 +14,8 @@ export const profile = {
   availability: "Disponible pour un stage du 11 janvier au 30 avril 2027 (16 semaines)",
   internship: "du 11 janvier au 30 avril 2027",
   cvFile: "/cv/Esteban-Barthod-Malat-CV-stage-2027.pdf",
+  // Version Suisse : adresse Passonfontaine (frontalier), +33, nationalité, langue maternelle.
+  cvFileSuisse: "/cv/Esteban-Barthod-Malat-CV-Suisse-2027.pdf",
 };
 
 export const siteUrl =

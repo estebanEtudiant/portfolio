@@ -1,7 +1,7 @@
 import { Download, Mail } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { CopyEmail } from "@/components/CopyEmail";
+import { CvChoice } from "@/components/CvChoice";
 import { HeroHalo } from "@/components/HeroHalo";
 import { HeroName } from "@/components/HeroName";
 import { GitHubIcon } from "@/components/icons";
@@ -9,7 +9,6 @@ import { SystemDiagram } from "@/components/SystemDiagram";
 import { projects, sideProjects } from "@/content/projects";
 import { about, intro, profile, siteUrl, skills, timeline } from "@/content/site";
 import { asset } from "@/lib/asset";
-import cvPreview from "../../public/cv/apercu-cv.webp";
 
 const wrap = "mx-auto max-w-6xl px-4 sm:px-8";
 
@@ -318,46 +317,17 @@ export default function Home() {
         <div
           className={`${wrap} grid items-start gap-12 py-20 lg:grid-cols-12 lg:py-28`}
         >
-          <div className="lg:col-span-5">
-            <SectionTitle id="cv">CV</SectionTitle>
-            <p className="mt-4 max-w-[28rem] text-lg text-graphite">
-              Toutes ces informations sur une page A4, pour une candidature de
-              stage {profile.internship}.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href={asset(profile.cvFile)}
-                download
-                className="bouton inline-flex h-12 items-center gap-2 rounded-full bg-encre px-6 font-medium text-calque"
-              >
-                <Download size={18} aria-hidden />
-                Télécharger le PDF
-              </a>
-              <a
-                href={asset(profile.cvFile)}
-                target="_blank"
-                rel="noopener"
-                className="balaye inline-flex h-12 items-center rounded-full border border-encre px-6 font-medium"
-              >
-                Ouvrir dans un onglet
-              </a>
-            </div>
-          </div>
-          <a
-            href={asset(profile.cvFile)}
-            target="_blank"
-            rel="noopener"
-            aria-label="Ouvrir le CV en PDF"
-            className="group block [perspective:1200px] lg:col-span-6 lg:col-start-7"
-          >
-            <Image
-              src={cvPreview}
-              alt="Aperçu du CV d'Esteban Barthod-Malat"
-              sizes="(min-width: 1024px) 500px, 100vw"
-              placeholder="blur"
-              className="w-full rounded-sm border border-trait shadow-[0_24px_60px_-30px_rgba(22,32,58,0.45)] transition-transform duration-500 ease-out motion-safe:group-hover:[transform:rotateX(4deg)_rotateY(-7deg)_translateY(-6px)]"
-            />
-          </a>
+          <CvChoice
+            intro={
+              <>
+                <SectionTitle id="cv">CV</SectionTitle>
+                <p className="mt-4 max-w-[28rem] text-lg text-graphite">
+                  Toutes ces informations sur une page A4, pour une candidature
+                  de stage {profile.internship}.
+                </p>
+              </>
+            }
+          />
         </div>
       </section>
 
