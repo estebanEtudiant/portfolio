@@ -102,6 +102,12 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
               </dd>
             </div>
           )}
+          {p.codeNote && (
+            <div>
+              <dt className="text-sm text-graphite">Code source</dt>
+              <dd className="mt-1">{p.codeNote}</dd>
+            </div>
+          )}
         </dl>
       </header>
 

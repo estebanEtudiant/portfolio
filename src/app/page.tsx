@@ -1,5 +1,6 @@
 import { Download, Mail } from "lucide-react";
 import Link from "next/link";
+import { ContactForm } from "@/components/ContactForm";
 import { CopyEmail } from "@/components/CopyEmail";
 import { CvChoice } from "@/components/CvChoice";
 import { HeroHalo } from "@/components/HeroHalo";
@@ -156,7 +157,7 @@ export default function Home() {
         <div className={`${wrap} py-20 lg:py-28`}>
           <SectionTitle id="projets">Projets</SectionTitle>
           <p className="mt-4 max-w-[36rem] text-lg text-graphite">
-            Trois études de cas, chacune avec le schéma de son architecture. Les
+            Quatre études de cas, chacune avec le schéma de son architecture. Les
             autres projets suivent en bref.
           </p>
 
@@ -342,13 +343,19 @@ export default function Home() {
             Une offre de stage, une question sur un projet ou une proposition
             d&apos;alternance : écrivez-moi.
           </p>
+          <div className="grid gap-x-16 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <ContactForm email={profile.email} />
+          </div>
+          <div className="mt-14 lg:col-span-5 lg:mt-10">
+          <p className="font-medium">Ou directement par mail :</p>
           <a
             href={`mailto:${profile.email}`}
-            className="lien mt-10 block break-words font-display text-[clamp(1.35rem,4.2vw,3rem)] font-semibold leading-tight tracking-[-0.01em] hover:text-cobalt"
+            className="lien mt-2 block break-words font-display text-[clamp(1.25rem,2.4vw,1.75rem)] font-semibold leading-tight hover:text-cobalt"
           >
             {profile.email}
           </a>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-6 flex flex-wrap items-center gap-3">
             <CopyEmail email={profile.email} />
             <a
               href={profile.github}
@@ -371,6 +378,8 @@ export default function Home() {
             )}
           </div>
           <p className="mt-8 text-graphite">{profile.location}. Permis B.</p>
+          </div>
+          </div>
         </div>
       </section>
     </>

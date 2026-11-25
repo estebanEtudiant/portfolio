@@ -61,6 +61,8 @@ export type Project = {
   role: string;
   outcome?: string;
   repo?: string;
+  /** Pourquoi il n'y a pas de lien vers le code (dépôt privé, code perdu…) */
+  codeNote?: string;
   demo?: string;
   /** Portfolio détaillé du projet (ex. portfolio de stage) */
   portfolio?: string;

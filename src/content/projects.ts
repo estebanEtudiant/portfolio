@@ -232,6 +232,7 @@ export const projects: Project[] = [
     ],
     challenges: [],
     role: "Projet personnel : conception, API, interface web et mobile, agents et tests.",
+    codeNote: "Dépôt privé : le code n'est pas public.",
     screenshots: [
       { src: "/projets/agent-entreprise/aujourdhui.webp", alt: "Écran du matin : synthèse rédigée par l'IA, marge globale et points bloquants", caption: "L'écran du matin : une synthèse rédigée à partir des chiffres calculés, puis ce qui bloque. Entreprise de démonstration, données fictives." },
       { src: "/projets/agent-entreprise/fiche-chantier.webp", alt: "Fiche d'un chantier dont les dépenses dépassent le budget", caption: "La fiche d'un chantier qui dérape : dépenses par poste comparées au budget." },
@@ -284,6 +285,7 @@ export const projects: Project[] = [
     ],
     challenges: [],
     role: "Projet personnel, de l'architecture au déploiement.",
+    codeNote: "Dépôt privé : le code n'est pas public.",
     screenshots: [],
     diagram: licencesDiagram,
   },
@@ -318,6 +320,7 @@ export const projects: Project[] = [
     ],
     challenges: [],
     role: "Développement en équipe de quatre, planification avec un diagramme de Gantt.",
+    codeNote: "Projet de 2024 : je n'ai plus le code.",
     screenshots: [],
     diagram: boardDiagram,
   },
