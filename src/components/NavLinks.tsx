@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { articles } from "@/content/blog";
 
 const links = [
   { id: "projets", label: "Projets" },
@@ -37,7 +38,8 @@ function useSectionLue(actif: boolean) {
 }
 
 export function NavLinks({ variant }: { variant: "desktop" | "mobile" }) {
-  const lue = useSectionLue(usePathname() === "/");
+  const pathname = usePathname();
+  const lue = useSectionLue(pathname === "/");
   const desktop = variant === "desktop";
 
   return (
@@ -60,6 +62,17 @@ export function NavLinks({ variant }: { variant: "desktop" | "mobile" }) {
           </Link>
         </li>
       ))}
+      {articles.length > 0 && (
+        <li className="apparait" style={{ animationDelay: `${120 + links.length * 70}ms` }}>
+          <Link
+            href="/blog/"
+            aria-current={pathname.startsWith("/blog") ? "page" : undefined}
+            className={`nav-lien block rounded-full px-3 text-[0.95rem] text-graphite ${desktop ? "py-2" : "py-1.5"}`}
+          >
+            Blog
+          </Link>
+        </li>
+      )}
     </ul>
   );
 }
